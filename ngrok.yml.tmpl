@@ -17,13 +17,15 @@ tunnels:
     inspect: false
     proto: {{getv $proto "http"}}
     {{ if exists $address -}}
-    {{$containers := printf "%s/containers/*/name" $service_name_key -}}
-    {{ if (len $containersa) gt 0 -}}
-    {{$server := dir (index $containers 0) -}}
-    {{$ip_key := printf "%s/primary_ip" $server -}}
+    {{$containers_key := printf "%s/containers/*/name" $service_name_key -}}
+    {{ $containers := gets $containers_key -}}
+    {{ if (len $containers) gt 0 -}}
+    {{ $container_pair := index $containers 0 -}}
+    {{ $container := dir $container_pair.Key -}}
+    {{$ip_key := printf "%s/primary_ip" $container -}}
     {{$ip := getv $ip_key -}}
     {{$addr := printf "%s%s" $ip (getv $address) -}}
-    addr: {{getv $addr }}
+    addr: {{ $addr }}
     {{ else -}}
     addr: {{ getenv "NGROK_ADDRESS" }} 
     {{end -}}
