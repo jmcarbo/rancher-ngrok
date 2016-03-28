@@ -8,4 +8,4 @@ keys = [
     "/services",
 ]
 check_cmd = "killall -KILL ngrok || true"
-run_cmd = "/bin/ngrok start --all --conf /etc/ngrok.yml"
+reload_cmd = "/bin/ngrok start --all --conf /etc/ngrok.yml"

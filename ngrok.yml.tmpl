@@ -1,6 +1,6 @@
 authtoken: {{getenv "NGROK_AUTHTOKEN"}}
 tunnels:
-{{range gets "/services/*/metadata/ngrok.enable" -}}
+  {{range gets "/services/*/metadata/ngrok.enable" -}}
   {{$metadata := dir .Key -}}
   {{$service_name_key := dir $metadata -}}
   {{$service_name := printf "%s/name" $service_name_key -}}
@@ -29,5 +29,5 @@ tunnels:
     {{ end -}}
     {{ if exists $auth }}
     auth: "{{getv $auth}}"
-    {{ end -}}
-{{end}}
+    {{ end }}
+  {{end}}
