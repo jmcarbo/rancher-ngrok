@@ -12,17 +12,22 @@ tunnels:
   {{getv $service_name}}:
     inspect: false
     proto: {{getv $proto "http"}}
-    addr: {{getv $proto (getenv "NGROK_ADDRESS")}}
-    {{ if exists $subdomain }}
+    {{ if exists $address -}}
+    addr: {{getv $address }}
+    {{ else -}}
+    addr: {{ getenv "NGROK_ADDRESS" }} 
+    {{ end -}}
+    {{ if exists $subdomain -}}
     subdomain: {{getv $subdomain}}
     host_header: {{getv $subdomain}}.ngrok.io
-    {{ else if exists $hostname }}
+    {{ else if exists $hostname -}}
     hostname: {{getv $hostname}}
     host_header: {{getv $hostname}}
-    {{ else }}
+    {{ else -}}
     subdomain: {{getv $service_name}}
     host_header: {{getv $service_name}}.ngrok.io
-    {{ end - }}
+    {{ end -}}
     {{ if exists $auth }}
     auth: "{{getv $auth}}"
+    {{ end -}}
 {{end}}
