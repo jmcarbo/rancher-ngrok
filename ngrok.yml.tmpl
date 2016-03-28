@@ -1,4 +1,8 @@
 authtoken: {{getenv "NGROK_AUTHTOKEN"}}
+log_level: info
+log_format: json
+log: /var/log/ngrok.log
+consolue_ui: false
 tunnels:
   {{range gets "/services/*/metadata/ngrok.enable" -}}
   {{$metadata := dir .Key -}}
