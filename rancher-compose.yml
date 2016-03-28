@@ -6,3 +6,9 @@ freepbx:
     ngrok.enable: 'true'
     ngrok.subdomain: 'pbxjmca'
     ngrok.address: ':80'
+#alfresco:
+#  scale: 1
+#  metadata:
+#    ngrok.enable: 'true'
+#    ngrok.subdomain: 'alfrescojmca'
+#    ngrok.address: ':8080'
