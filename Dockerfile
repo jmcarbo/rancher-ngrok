@@ -7,7 +7,7 @@ RUN set -x \
  && rm -f /ngrok.zip
 ADD https://github.com/kelseyhightower/confd/releases/download/v0.12.0-alpha3/confd-0.12.0-alpha3-linux-amd64 /usr/local/bin/confd
 RUN chmod +x /usr/local/bin/confd
-ADD https://github.com/gwoo/goforever/releases/download/v0.1.0/goforever-linux-amd64 /usr/local/bin/goforever
+ADD goforever /usr/local/bin/goforever
 RUN chmod +x /usr/local/bin/goforever
 RUN bash -c 'mkdir -p /etc/confd/{conf.d,templates}'
 ADD confd.toml /etc/confd/conf.d/confd.toml
