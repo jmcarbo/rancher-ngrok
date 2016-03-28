@@ -1,0 +1,18 @@
+ip = "127.0.0.1"
+port = "2224"
+username = "go"
+password = "forever"
+pidfile = "goforever.pid"
+logfile = "goforever.log"
+errfile = "goforever.log"
+
+[[process]]
+name = "ngrok"
+command = "/bin/ngrok"
+args = [ "start", "--all", "--config=/etc/ngrok.yml" ]
+pidfile = "/var/run/ngrok.pid"
+logfile = "/var/logs/ngrok.log"
+errfile = "/var/logs/ngrok.log"
+respawn = 1
+delay = "1m"
+ping = "30s"
