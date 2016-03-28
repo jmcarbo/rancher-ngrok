@@ -7,5 +7,5 @@ keys = [
     "/containers",
     "/services",
 ]
-check_cmd = "killall -KILL ngrok || true"
-reload_cmd = "/usr/local/bin/goforever -conf=/etc/goforever.toml restart ngrok"
+#check_cmd = "killall -KILL ngrok || true"
+reload_cmd = "cd / && /goforever restart ngrok"
