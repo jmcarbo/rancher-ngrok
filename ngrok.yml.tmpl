@@ -1,0 +1,28 @@
+authtoken: {{getenv "NGROK_AUTHTOKEN"}}
+tunnels:
+{{range gets "/services/*/metadata/ngrok.enable" -}}
+  {{$metadata := dir .Key -}}
+  {{$service_name_key := dir $metadata -}}
+  {{$service_name := printf "%s/name" $service_name_key -}}
+  {{$proto := printf "%s/ngrok.proto" $metadata -}}
+  {{$address := printf "%s/ngrok.address" $metadata -}}
+  {{$subdomain := printf "%s/ngrok.subdomain" $metadata -}}
+  {{$hostname := printf "%s/ngrok.hostname" $metadata -}}
+  {{$auth := printf "%s/ngrok.auth" $metadata -}}
+  {{getv $service_name}}:
+    inspect: false
+    proto: {{getv $proto "http"}}
+    addr: {{getv $proto (getenv "NGROK_ADDRESS")}}
+    {{ if exists $subdomain }}
+    subdomain: {{getv $subdomain}}
+    host_header: {{getv $subdomain}}.ngrok.io
+    {{ else if exists $hostname }}
+    hostname: {{getv $hostname}}
+    host_header: {{getv $hostname}}
+    {{ else }}
+    subdomain: {{getv $service_name}}
+    host_header: {{getv $service_name}}.ngrok.io
+    {{ end - }}
+    {{ if exists $auth }}
+    auth: "{{getv $auth}}"
+{{end}}

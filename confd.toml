@@ -1,0 +1,11 @@
+[template]
+src = "ngrok.yml.tmpl"
+dest = "/etc/ngrok.yml"
+prefix = "/latest"
+keys = [
+    "/self",
+    "/containers",
+    "/services",
+]
+check_cmd = "killall -KILL ngrok || true"
+run_cmd = "/bin/ngrok start --all --conf /etc/ngrok.yml"
