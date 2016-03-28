@@ -1,2 +1,8 @@
 ngrok:
   scale: 1
+freepbx:
+  scale: 1
+  metadata:
+    ngrok.enable: 'true'
+    ngrok.subdomain: 'pbxjmca'
+    ngrok.address: ':80'

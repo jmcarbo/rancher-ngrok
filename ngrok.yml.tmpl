@@ -17,7 +17,16 @@ tunnels:
     inspect: false
     proto: {{getv $proto "http"}}
     {{ if exists $address -}}
-    addr: {{getv $address }}
+    {{$containers := printf "%s/containers/*/name" $service_name_key -}}
+    {{ if (len $containersa) gt 0 -}}
+    {{$server := dir (index $containers 0) -}}
+    {{$ip_key := printf "%s/primary_ip" $server -}}
+    {{$ip := getv $ip_key -}}
+    {{$addr := printf "%s%s" $ip (getv $address) -}}
+    addr: {{getv $addr }}
+    {{ else -}}
+    addr: {{ getenv "NGROK_ADDRESS" }} 
+    {{end -}}
     {{ else -}}
     addr: {{ getenv "NGROK_ADDRESS" }} 
     {{ end -}}
