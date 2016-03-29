@@ -47,3 +47,47 @@ tunnels:
     {{ end }}
   {{end -}}
   {{end}}
+
+  {{range gets "/services/*/labels/ngrok.enable" -}}
+  {{$metadata := dir .Key -}}
+  {{$service_name_key := dir $metadata -}}
+  {{$service_name := printf "%s/name" $service_name_key -}}
+  {{$proto := printf "%s/ngrok.proto" $metadata -}}
+  {{$address := printf "%s/ngrok.address" $metadata -}}
+  {{$subdomain := printf "%s/ngrok.subdomain" $metadata -}}
+  {{$hostname := printf "%s/ngrok.hostname" $metadata -}}
+  {{$auth := printf "%s/ngrok.auth" $metadata -}}
+  {{$containers_key := printf "%s/containers/*/name" $service_name_key -}}
+  {{$has_sidekicks := printf "%s/ngrok.has_sidekicks" $metadata -}}
+  {{$sidekicks := printf "%s/sidekicks/*" $service_name_key -}}
+  {{$containers := gets $containers_key -}}
+
+  {{if or (and (exists $has_sidekicks) (gt (len (gets $sidekicks)) 0)) (not (exists $has_sidekicks)) -}}
+  {{getv $service_name}}:
+    inspect: false
+    proto: {{getv $proto "http"}}
+    {{if exists $address -}}
+    {{ $container_pair := index $containers 0 -}}
+    {{ $container := dir $container_pair.Key -}}
+    {{$ip_key := printf "%s/primary_ip" $container -}}
+    {{$ip := getv $ip_key -}}
+    {{$addr := printf "%s%s" $ip (getv $address) -}}
+    addr: {{ $addr }}
+    {{else -}}
+    addr: {{ getenv "NGROK_ADDRESS" }} 
+    {{end -}}
+    {{ if exists $subdomain -}}
+    subdomain: {{getv $subdomain}}
+    host_header: {{getv $subdomain}}.ngrok.io
+    {{ else if exists $hostname -}}
+    hostname: {{getv $hostname}}
+    host_header: {{getv $hostname}}
+    {{ else -}}
+    subdomain: {{getv $service_name}}
+    host_header: {{getv $service_name}}.ngrok.io
+    {{ end -}}
+    {{ if exists $auth }}
+    auth: "{{getv $auth}}"
+    {{ end }}
+  {{end -}}
+  {{end}}
