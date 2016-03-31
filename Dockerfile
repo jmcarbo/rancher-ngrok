@@ -19,6 +19,7 @@ RUN chmod +x /usr/local/bin/gosuv
 RUN bash -c 'mkdir -p /etc/confd/{conf.d,templates}'
 ADD confd.toml /etc/confd/conf.d/confd.toml
 ADD ngrok.yml.tmpl /etc/confd/templates/ngrok.yml.tmpl
+ADD consul.yml.tmpl /etc/confd/templates/consul.yml.tmpl
 ADD start.sh /start.sh
 ADD goforever.toml /goforever.toml
 RUN chmod +x /start.sh

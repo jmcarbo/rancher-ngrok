@@ -2,3 +2,5 @@ ngrok.yml
 docker-compose.yml
 credentials.env
 do.sh
+testngrok/*
+testngrok
