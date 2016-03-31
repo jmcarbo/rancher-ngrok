@@ -5,6 +5,11 @@ ADD https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip /ngrok.zip
 RUN set -x \
  && unzip -o ngrok.zip -d /bin \
  && rm -f /ngrok.zip
+ADD https://releases.hashicorp.com/consul-template/0.14.0/consul-template_0.14.0_linux_amd64.zip /consul-template.zip
+RUN set -x \
+ && unzip -o consul-template.zip -d /bin \
+ && rm -f /consul-template.zip
+RUN chmod +x /bin/consul-template
 ADD https://github.com/kelseyhightower/confd/releases/download/v0.12.0-alpha3/confd-0.12.0-alpha3-linux-amd64 /usr/local/bin/confd
 RUN chmod +x /usr/local/bin/confd
 ADD goforever /goforever
