@@ -2,6 +2,7 @@
 export GODEBUG=netdns=cgo
 echo "" >/etc/consul.yml
 gosuv add --name "ngrok" -- /bin/ngrok start --all --config=/etc/ngrok.yml --config=/etc/consul.yml
+#gosuv add --name "consul-template" -- /bin/consul-templates --consul="$CONSUL_URL" --token="$CONSUL_TOKEN" -template "/etc/confd/templates/consul.yml.tmpl:/etc/consul.yml" 
 confd -onetime -backend rancher
 gosuv stop ngrok && gosuv start ngrok
 confd -backend rancher -interval ${CONFD_INTERVAL:-15}
