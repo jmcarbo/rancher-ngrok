@@ -19,7 +19,7 @@ ngrok:
   environment:
     - NGROK_AUTHTOKEN=
     - CONSUL_URL=consul:8500
-    - CONSUL_TOKEN=
+    - CONSUL_HTTP_TOKEN=
   labels:
     io.rancher.container.pull_image: always
   image: jmcarbo/rancher-ngrok
